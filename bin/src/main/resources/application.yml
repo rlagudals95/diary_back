@@ -1,0 +1,28 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /
+    
+spring:     
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://database-2.cthnhpqt6mil.ap-northeast-2.rds.amazonaws.com:3306/study_db?serverTimezone=Asia/Seoul
+    username: root
+    password: cke5507k
+    
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+
+  jackson:
+    time-zone: Asia/Seoul
+    
+ 
+  property:
+        keys:
+          - ClientID : Qjcu2eErcOe9ypZkNwbQ
+            ClientSecret : 2S8N_LMwCP
