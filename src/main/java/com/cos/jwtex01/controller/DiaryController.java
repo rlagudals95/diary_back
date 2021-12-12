@@ -1,8 +1,10 @@
 package com.cos.jwtex01.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,15 @@ public class DiaryController {
 		
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));
 		
+	}
+	
+	@GetMapping("/list/{id}")
+	public List<Map<String,Object>> list(@PathVariable Integer id) {
+		//
+		//System.out.println("테스트 :" + param );
+		System.out.println("테스트 :" + id);
+		System.out.println("쿼리 결과 : " +diaryRepository.findByAdmin_no(id));
+		return diaryRepository.findByAdmin_no(id);
 	}
 	
 	
