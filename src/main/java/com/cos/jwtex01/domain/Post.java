@@ -1,4 +1,4 @@
-package com.cos.jwtex01.domain.post;
+package com.cos.jwtex01.domain;
 
 import java.sql.Timestamp;
 
@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.cos.jwtex01.domain.user.User;
+import com.cos.jwtex01.domain.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;

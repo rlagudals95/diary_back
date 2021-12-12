@@ -1,4 +1,4 @@
-package com.cos.jwtex01.web;
+package com.cos.jwtex01.controller;
 
 import java.net.URLEncoder;
 import java.util.List;

@@ -17,7 +17,7 @@ import org.springframework.web.filter.CorsFilter;
 
 import com.cos.jwtex01.config.jwt.JwtAuthenticationFilter;
 import com.cos.jwtex01.config.jwt.JwtAuthorizationFilter;
-import com.cos.jwtex01.domain.user.UserRepository;
+import com.cos.jwtex01.domain.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

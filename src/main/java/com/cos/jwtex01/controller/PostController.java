@@ -1,4 +1,4 @@
-package com.cos.jwtex01.web;
+package com.cos.jwtex01.controller;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.jwtex01.config.auth.LoginUser;
 import com.cos.jwtex01.config.auth.Principal;
-import com.cos.jwtex01.domain.post.Post;
-import com.cos.jwtex01.domain.post.PostRepository;
-import com.cos.jwtex01.web.post.PostReqDto;
+import com.cos.jwtex01.domain.Post;
+import com.cos.jwtex01.domain.PostRepository;
+import com.cos.jwtex01.dto.PostReqDto;
 
 import lombok.RequiredArgsConstructor;
 

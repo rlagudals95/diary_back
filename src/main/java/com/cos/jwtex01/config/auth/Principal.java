@@ -6,7 +6,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.cos.jwtex01.domain.user.User;
+import com.cos.jwtex01.domain.User;
 
 public class Principal implements UserDetails{
 

@@ -1,4 +1,4 @@
-package com.cos.jwtex01.domain.post;
+package com.cos.jwtex01.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

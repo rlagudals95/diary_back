@@ -1,14 +1,14 @@
-package com.cos.jwtex01.web;
+package com.cos.jwtex01.controller;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cos.jwtex01.domain.user.User;
-import com.cos.jwtex01.domain.user.UserRepository;
-import com.cos.jwtex01.web.user.JoinReqDto;
-import com.cos.jwtex01.web.user.LoginReqDto;
+import com.cos.jwtex01.domain.User;
+import com.cos.jwtex01.domain.UserRepository;
+import com.cos.jwtex01.dto.JoinReqDto;
+import com.cos.jwtex01.dto.LoginReqDto;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.cos.jwtex01.web.user;
+package com.cos.jwtex01.dto;
 
 import lombok.Data;
 

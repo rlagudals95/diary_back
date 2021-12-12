@@ -1,7 +1,7 @@
-package com.cos.jwtex01.web.post;
+package com.cos.jwtex01.dto;
 
-import com.cos.jwtex01.domain.post.Post;
-import com.cos.jwtex01.domain.user.User;
+import com.cos.jwtex01.domain.Post;
+import com.cos.jwtex01.domain.User;
 
 import lombok.Data;
 

@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.cos.jwtex01.domain.user.User;
-import com.cos.jwtex01.domain.user.UserRepository;
+import com.cos.jwtex01.domain.User;
+import com.cos.jwtex01.domain.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
