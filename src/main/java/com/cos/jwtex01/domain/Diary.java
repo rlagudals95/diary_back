@@ -39,9 +39,12 @@ public class Diary{
     @JoinColumn(name = "admin_no") // 외래키
     private User user;
 
+	@Column(length = 1000, nullable = false)
+    private String title;	
+	
     @Column(length = 5000, nullable = false)
     private String content;
-	
+    
     @Temporal(TemporalType.DATE)
     @CreationTimestamp // insert 시 자동 생성
     private Date create_date;
