@@ -29,18 +29,17 @@ public class DiaryController {
 	@PostMapping("/post")
 	public Diary post(@RequestBody DiaryReqDto diaryReqDto , @LoginUser Principal principal ) {
 		System.out.println("다이어리 내용 : " + diaryReqDto);
+		System.out.println("다이어리 유저 : " + diaryReqDto.toEntity(principal.getUser()));
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));
 		
 	}
 	
 	// 유저 리스트 
-	@GetMapping("/list/{id}")
-	public List<Map<String,Object>> list(@PathVariable Long id) {
+	@GetMapping("/list")
+	public List<Map<String,Object>> list(@LoginUser Principal principal) {
 		//
 		//System.out.println("테스트 :" + param );
-		System.out.println("테스트 :" + id);
-		System.out.println("쿼리 결과 : " +diaryRepository.findByAdmin_no(id));
-		return diaryRepository.findByAdmin_no(id);
+		return diaryRepository.findByAdmin_no(principal.getUser().getAdmin_no());
 	}
 	
 	
@@ -50,7 +49,7 @@ public class DiaryController {
 		return  diaryRepository.findByDiary_no(id);
 	}
 	
-	@GetMapping("/list")
+	@GetMapping("/list/all")
 	public List<Diary> listAll() {
 		// 컨트롤러 단에서 바로작성 가능
 		List<Diary> diaryList = diaryRepository.findAll();
