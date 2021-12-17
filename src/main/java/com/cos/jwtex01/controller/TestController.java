@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.jwtex01.config.auth.LoginUser;
 import com.cos.jwtex01.config.auth.Principal;
+import com.cos.jwtex01.service.NaverService;
 
 @RestController
 public class TestController {
@@ -20,7 +21,15 @@ public class TestController {
 		//System.out.println("principal : "+principal.getUsername());
 			
 		return NaverService.main(url);
-	}	
+	}
+	
+//	@GetMapping("/")
+//	public String main() {
+//		//System.out.println("principal : "+principal.getUsername());
+//			
+//		return "<h1>Diary</h1>";
+//	}
+	
 }
 
 

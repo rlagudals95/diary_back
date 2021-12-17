@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import com.cos.jwtex01.config.auth.Principal;
 import com.cos.jwtex01.domain.Diary;
 import com.cos.jwtex01.domain.DiaryRepository;
 import com.cos.jwtex01.dto.DiaryReqDto;
+import com.cos.jwtex01.service.GrammarService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,21 +26,19 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/diary")
 public class DiaryController {
 	
+	@Autowired
+	private GrammarService grammarService;
+	
 	private final DiaryRepository diaryRepository;
 	
 	@PostMapping("/post")
 	public Diary post(@RequestBody DiaryReqDto diaryReqDto , @LoginUser Principal principal ) {
-		System.out.println("다이어리 내용 : " + diaryReqDto);
-		System.out.println("다이어리 유저 : " + diaryReqDto.toEntity(principal.getUser()));
-		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));
-		
+		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
 	
 	// 유저 리스트 
 	@GetMapping("/list")
 	public List<Map<String,Object>> list(@LoginUser Principal principal) {
-		//
-		//System.out.println("테스트 :" + param );
 		return diaryRepository.findByAdmin_no(principal.getUser().getAdmin_no());
 	}
 	
@@ -51,7 +51,6 @@ public class DiaryController {
 	
 	@GetMapping("/list/all")
 	public List<Diary> listAll() {
-		// 컨트롤러 단에서 바로작성 가능
 		List<Diary> diaryList = diaryRepository.findAll();
 		
 		return diaryList;
@@ -59,11 +58,14 @@ public class DiaryController {
 	
 	@GetMapping("/findByJpa/{id}")
 	public Optional <Diary> findByJpa(@PathVariable Long id) {
-		// 컨트롤러 단에서 바로작성 가능
 		Optional <Diary> diary = diaryRepository.findById(id);
-		
 		return diary;
 	}
 	
+	@PostMapping("/grammar")
+	public String grammar(@RequestBody Map<String, Object> param) {
+		System.out.println("검사할 문자 : " +param);
+		return grammarService.grammarCorrect((String)param.get("content"));
+	}
 	
 }
