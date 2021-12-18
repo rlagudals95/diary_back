@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +23,6 @@ import com.cos.jwtex01.dto.DiaryReqDto;
 import com.cos.jwtex01.service.GrammarService;
 
 import lombok.RequiredArgsConstructor;
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/diary")
@@ -31,20 +33,31 @@ public class DiaryController {
 	
 	private final DiaryRepository diaryRepository;
 	
+	@PostMapping("/main")
+	public String main(@LoginUser Principal principal) {
+		
+		return (String) diaryRepository.findKeyword(principal.getUser().getAdmin_no());
+	}
+	
+	
 	@PostMapping("/post")
 	public Diary post(@RequestBody DiaryReqDto diaryReqDto , @LoginUser Principal principal ) {
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
 	
 	// 유저 리스트 
-	@GetMapping("/list")
-	public List<Map<String,Object>> list(@LoginUser Principal principal) {
-		return diaryRepository.findByAdmin_no(principal.getUser().getAdmin_no());
+	@PostMapping("/list")
+	public List<Map<String, Object>> list(@LoginUser Principal principal, @RequestBody Map<String, Object> param) {
+		//Pageable paging = PageRequest.of(0, 10, Sort.Direction.DESC, "create_date");
+		
+		System.out.println("페이징 : "+ param);
+		System.out.println("어드민 넘qj : "+principal.getUser().getAdmin_no());
+		return diaryRepository.findByAdmin_no(principal.getUser().getAdmin_no(), param.get("size"), param.get("page"));
 	}
 	
 	
 	@GetMapping("/detail/{id}")
-	public Optional <Diary> datail(@PathVariable Long id) {
+	public Optional <Diary> datail(@PathVariable Long id ) {
 	
 		return  diaryRepository.findByDiary_no(id);
 	}
