@@ -27,26 +27,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // bean 생성자
 @AllArgsConstructor
 @Builder // 빌더 패턴
-@Table(name = "Diary")
+@Table(name = "Keyword")
 @DynamicInsert // null 것(role)은 제외하고 insert 그래야 role의 default값(user)이 들어감
-public class Diary{
+public class Keyword{
 	
 	@Id
     @GeneratedValue
-    private Long diary_no;
+    private Long keyword_no;
 	
 	@ManyToOne
     @JoinColumn(name = "admin_no") // 외래키
     private User user;
-
-	@Column(length = 1000, nullable = false)
-    private String title;	
+	
+	@Column(length = 100, nullable = false)
+    private String keyword_log;
+	
+	@Column(length = 5000, nullable = false)
+    private String keyword_title;
 	
     @Column(length = 5000, nullable = false)
-    private String content;
-    
-    @Column(length = 100, nullable = false)
-    private String keyword;
+    private String keyword_content;
     
     @Temporal(TemporalType.DATE)
     @CreationTimestamp // insert 시 자동 생성
