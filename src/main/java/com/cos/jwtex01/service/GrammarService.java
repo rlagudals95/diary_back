@@ -31,7 +31,7 @@ public class GrammarService {
 
 	private static String correctIt(String source) { //네이버에서 맞춤법 교정하는 메소드
 		
-		System.out.println("수정 중 : "+driver.findElement(By.cssSelector("#grammar_checker > div.check_box > div.text_box._original" )));
+		System.out.println("드라이버 확인 : "+ driver);
 		
 		driver.findElement(By.cssSelector(
 				"#grammar_checker > div.check_box > div.text_box._original > div > div.text_area > textarea")).clear();//글쓰기 영역을 깨끗이 지운다.
