@@ -1,5 +1,6 @@
 package com.cos.jwtex01.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -65,13 +66,19 @@ public class DiaryController {
 	@GetMapping("/list/all")
 	public List<Diary> listAll() {
 		List<Diary> diaryList = diaryRepository.findAll();
-		
 		return diaryList;
 	}
 	
 	@GetMapping("/findByJpa/{id}")
 	public Optional <Diary> findByJpa(@PathVariable Long id) {
 		Optional <Diary> diary = diaryRepository.findById(id);
+		
+		return diary;
+	}
+	
+	@PostMapping("/detail/{id}")
+	public Optional<Diary> deatil(@PathVariable Long id) {
+		Optional<Diary> diary = diaryRepository.findById(id);
 		return diary;
 	}
 	
@@ -80,5 +87,7 @@ public class DiaryController {
 		System.out.println("검사할 문자 : " +param);
 		return grammarService.grammarCorrect((String)param.get("content"));
 	}
+	
+	
 	
 }
