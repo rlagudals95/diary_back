@@ -46,6 +46,9 @@ public class Diary{
     private String content;
     
     @Column(length = 100, nullable = false)
+    private String category;
+    
+    @Column(length = 100, nullable = true)
     private String keyword;
     
     @Temporal(TemporalType.DATE)

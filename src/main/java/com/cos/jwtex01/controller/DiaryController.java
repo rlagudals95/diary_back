@@ -51,6 +51,7 @@ public class DiaryController {
 	
 	@PostMapping("/post")
 	public Diary post(@RequestBody DiaryReqDto diaryReqDto , @LoginUser Principal principal ) {
+		System.out.println("다이어리 추가 : "+diaryReqDto);
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
 	

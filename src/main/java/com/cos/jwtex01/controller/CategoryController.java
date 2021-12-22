@@ -34,9 +34,8 @@ public class CategoryController {
 	private final CategoryRepository categoryRepository;
 	
 	@PostMapping("/list")
-	public void main(@LoginUser Principal principal) {
-		
-		//return (String) categoryRepository.findKeyword(principal.getUser().getAdmin_no());
+	public List<Category> main(@LoginUser Principal principal) {
+		return categoryRepository.findByAdmin_no(principal.getUser().getAdmin_no());
 	}
 	
 	@PostMapping("/add")
