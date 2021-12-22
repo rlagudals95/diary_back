@@ -9,11 +9,15 @@ import lombok.Data;
 public class DiaryReqDto {
     private String title;
     private String content;
+    private String category;
+    private String keyword;
     
 	public Diary toEntity(User user) {
 		return Diary.builder()
 				.title(title)
 				.content(content)
+				.category(category)
+				.keyword(keyword)
 				.user(user)
 				.build();
 	}
