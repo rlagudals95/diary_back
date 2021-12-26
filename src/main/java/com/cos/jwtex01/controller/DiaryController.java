@@ -64,10 +64,11 @@ public class DiaryController {
 		
 		int after_progress = (int) (before_progress + diaryReqDto.getScore());
 		if(after_progress >= 100) {
-			//  complete_yn = 'Y' 로직 추가
+			categoryRepository.updateCategoryComplete(category_no);
+		} else {
+			categoryRepository.updateCategoryProgress(after_progress, category_no );
 		}
-		categoryRepository.updateCategoryProgress(after_progress, category_no );
-		
+			
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
 	
