@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.jwtex01.config.auth.LoginUser;
 import com.cos.jwtex01.config.auth.Principal;
+import com.cos.jwtex01.domain.Category;
+import com.cos.jwtex01.domain.CategoryRepository;
 import com.cos.jwtex01.domain.Diary;
 import com.cos.jwtex01.domain.DiaryRepository;
 import com.cos.jwtex01.dto.DiaryReqDto;
@@ -42,6 +44,8 @@ public class DiaryController {
 	
 	private final DiaryRepository diaryRepository;
 	
+	private final CategoryRepository categoryRepository;
+	
 	@PostMapping("/main")
 	public String main(@LoginUser Principal principal) {
 		
@@ -52,6 +56,18 @@ public class DiaryController {
 	@PostMapping("/post")
 	public Diary post(@RequestBody DiaryReqDto diaryReqDto , @LoginUser Principal principal ) {
 		System.out.println("다이어리 추가 : "+diaryReqDto);
+		// progress에 score 더하는 로직추가
+		// 게시물의 카테고리 score 가져오자	
+		Long category_no = diaryReqDto.getCategory_no();	
+		//Optional<Category> category = categoryRepository.findById(category_no);
+		int before_progress = categoryRepository.findByCategory_no(category_no);
+		
+		int after_progress = (int) (before_progress + diaryReqDto.getScore());
+		if(after_progress >= 100) {
+			//  complete_yn = 'Y' 로직 추가
+		}
+		categoryRepository.updateCategoryProgress(after_progress, category_no );
+		
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
 	

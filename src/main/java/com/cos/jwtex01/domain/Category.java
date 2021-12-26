@@ -12,10 +12,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.google.gson.annotations.Since;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,11 +43,20 @@ public class Category{
 	@Column(length = 100, nullable = false)
     private String name;
     
-    @Temporal(TemporalType.DATE)
+	@Column(length = 2, nullable = false)
+    private String complete_yn;
+	
+	@Column(length = 2, nullable = false)
+    private String use_yn;
+	@Column(nullable = false)
+
+    private int progress;
+	
+    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp 
     private Date create_date;
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp 
     private Date update_date;
 }

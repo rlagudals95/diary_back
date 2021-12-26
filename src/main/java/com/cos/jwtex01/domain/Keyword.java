@@ -48,11 +48,11 @@ public class Keyword{
     @Column(length = 5000, nullable = false)
     private String keyword_content;
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp // insert 시 자동 생성
     private Date create_date;
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp // update 시 자동 생성
     private Date update_date;
 }

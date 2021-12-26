@@ -1,5 +1,7 @@
 package com.cos.jwtex01.domain;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,20 +45,23 @@ public class Diary{
 	@Column(length = 1000, nullable = false)
     private String title;	
 	
+	@Column(nullable = false) // 외래키
+    private Long category_no;
+	
     @Column(length = 5000, nullable = false)
     private String content;
-    
-    @Column(length = 100, nullable = false)
-    private String category;
     
     @Column(length = 100, nullable = true)
     private String keyword;
     
-    @Temporal(TemporalType.DATE)
-    @CreationTimestamp // insert 시 자동 생성
-    private Date create_date;
+    @Column
+    private Long score;
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp // insert 시 자동 생성
+    private Date  create_date;
+    
+    @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp // update 시 자동 생성
-    private Date update_date;
+    private Date  update_date;
 }

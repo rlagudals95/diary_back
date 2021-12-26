@@ -14,6 +14,9 @@ public class CategoryReqDto {
 		return Category.builder()
 				.name(name)
 				.user(user)
+				.complete_yn("N")
+				.use_yn("Y")
+				.progress(Integer.parseInt("0"))
 				.build();
 	}
 }
