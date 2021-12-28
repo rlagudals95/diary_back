@@ -43,6 +43,9 @@ public class Category{
 	@Column(length = 100, nullable = false)
     private String name;
     
+	@Column(length = 1000)
+    private String image_url;
+	
 	@Column(length = 2, nullable = false)
     private String complete_yn;
 	

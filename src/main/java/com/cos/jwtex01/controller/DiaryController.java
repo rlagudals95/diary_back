@@ -23,6 +23,7 @@ import com.cos.jwtex01.domain.CategoryRepository;
 import com.cos.jwtex01.domain.Diary;
 import com.cos.jwtex01.domain.DiaryRepository;
 import com.cos.jwtex01.dto.DiaryReqDto;
+import com.cos.jwtex01.service.AWSservice;
 import com.cos.jwtex01.service.GrammarService;
 import com.cos.jwtex01.service.SpellService;
 import com.cos.jwtex01.service.WorkcheckService;
@@ -41,6 +42,9 @@ public class DiaryController {
 	
 	@Autowired
 	private SpellService spellService;
+	
+	@Autowired
+	private AWSservice awsService;
 	
 	private final DiaryRepository diaryRepository;
 	

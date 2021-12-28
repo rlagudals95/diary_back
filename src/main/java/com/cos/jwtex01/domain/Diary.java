@@ -54,6 +54,9 @@ public class Diary{
     @Column(length = 100, nullable = true)
     private String keyword;
     
+    @Column(length = 1000)
+    private String image_url;
+    
     @Column
     private Long score;
     
