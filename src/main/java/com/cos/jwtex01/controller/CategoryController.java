@@ -45,8 +45,13 @@ public class CategoryController {
 		return categoryRepository.save(categoryReqDto.toEntity(principal.getUser()));	
 	}
 	
+	@PostMapping("/view/{id}")
+	public Category view(@PathVariable Long id) {
+		return categoryRepository.findCategory(id);
+	}
+	
 	@PostMapping("/edit/{id}")
-	public Category main(@PathVariable Long id, @RequestBody Map<String, Object> param) {
+	public Category edit(@PathVariable Long id, @RequestBody Map<String, Object> param) {
 		int progress =  (int) param.get("progress");
 		return categoryRepository.updateCategoryProgress(id,progress);
 	}

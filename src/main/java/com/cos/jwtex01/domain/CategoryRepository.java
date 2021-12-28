@@ -2,6 +2,7 @@ package com.cos.jwtex01.domain;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -19,6 +20,10 @@ public interface CategoryRepository extends JpaRepository<Category, Long>{
 	@Query(value = "SELECT c.progress "
 			+ "FROM Category c WHERE c.category_no = :category_no", nativeQuery = true)
 	int findByCategory_no(@Param("category_no") Long category_no);
+	
+	@Query(value = "SELECT * "
+			+ "FROM Category c WHERE c.category_no = :category_no", nativeQuery = true)
+	Category findCategory(@Param("category_no") Long category_no);
 	
 	@Transactional
 	@Modifying(clearAutomatically = true)
