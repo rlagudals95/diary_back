@@ -1,6 +1,7 @@
 package com.cos.jwtex01.service;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -46,5 +47,81 @@ public class AWSservice {
             }
         }
     }
+    
+    
+//    public List<Map<String,Object>> saveImgInfo(Map<String, Object> param) throws Exception {
+//
+//		List<Map<String,Object>> resultList = new ArrayList<Map<String, Object>>();
+//
+//		MultipartFile[] files = (MultipartFile[]) param.get("files");
+//		if(files == null) return resultList;
+//
+//
+//
+//		for(MultipartFile img : files) {
+//
+//			if(img != null && !img.isEmpty()) {
+//				System.out.println("img : "+ img);
+//				String img_type = (String)param.get("category_" + img.getName());	// get img_type
+//
+//				String file_name = img.getOriginalFilename();
+//				String ext = fName.substring(fName.lastIndexOf(".")+1, fName.length());
+//				String ext = StringUtil.substrIndex(file_name, ".");
+//				String temp_dir = getUpladPath();	// image upload directory
+//				String mask = String.valueOf(System.nanoTime());
+//				long img_size = img.getSize();
+//
+//				File uploadTempFile = new File(temp_dir + mask + "." + ext);
+//				img.transferTo(uploadTempFile);
+//				
+//				String key_no = param.get("key_no").toString();
+//
+//				Long create_no = 0L;
+//				
+//				if(param.get("create_no") != null) {
+//					create_no = Long.valueOf(param.get("create_no").toString()); 
+//				}else if(param.get("update_no") != null) {
+//					create_no = Long.valueOf(param.get("update_no").toString()); 
+//				}
+//						
+//
+//				/* upload s3 start ****************************************/
+//				String upload_key = "work_img/"
+//						.concat(DateUtil.getCurrentTime("yyyyMMddHHmmssSSS"))
+//						.concat("_")
+//						.concat(key_no)
+//						.concat("_")
+//						.concat(StringUtil.randomString(3))
+//						.concat(".")
+//						.concat(ext);
+//
+//				String s3_bucket = "workerman-upload-real";
+//				String s3_url = "https://s3.ap-northeast-2.amazonaws.com/";
+//
+//				s3Service.uploadFile(s3_bucket, upload_key , uploadTempFile, CannedAccessControlList.PublicRead);
+//
+//        		//uploadTempFile.delete();
+//
+//        		String file_url = s3_url.concat("/").concat(s3_bucket).concat("/").concat(upload_key);
+//				/* upload s3 end *****************************************/
+//
+//				/* insert image information */
+//				Map<String, Object> imgMap = new HashMap<String, Object>();
+//				imgMap.put("img_type", img_type); // image
+//				imgMap.put("img_name", file_name);
+//				imgMap.put("img_url", file_url);
+//				imgMap.put("img_size", img_size);
+//				imgMap.put("img_ext", ext);
+//				imgMap.put("key_no", key_no);
+//				imgMap.put("create_no", create_no);
+//				
+//				resultList.add(imgMap);
+//				//TODO
+//				// file size 조절(aws 조절가능 여부 확인 필요.)
+//			}
+//		}
+//
+//		return resultList;
+//	}
 }
  
