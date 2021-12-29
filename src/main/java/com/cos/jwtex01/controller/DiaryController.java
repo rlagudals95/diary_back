@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cos.jwtex01.config.auth.LoginUser;
 import com.cos.jwtex01.config.auth.Principal;
@@ -74,6 +75,13 @@ public class DiaryController {
 		}
 			
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
+	}
+	
+	@PostMapping("/post/test")
+	public void test(MultipartHttpServletRequest request, @LoginUser Principal principal ) {
+	
+		System.out.println("멀티파트 : "+request);
+			
 	}
 	
 	// 유저 리스트 
