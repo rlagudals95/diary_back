@@ -1,9 +1,12 @@
 package com.cos.jwtex01.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -14,9 +17,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.amazonaws.services.s3.internal.Constants;
 import com.cos.jwtex01.config.auth.LoginUser;
 import com.cos.jwtex01.config.auth.Principal;
 import com.cos.jwtex01.domain.Category;
@@ -77,11 +87,28 @@ public class DiaryController {
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
 	
-	@PostMapping("/post/test")
-	public void test(MultipartHttpServletRequest request, @LoginUser Principal principal ) {
-	
-		System.out.println("멀티파트 : "+request);
-			
+//	@PostMapping("/post/test")
+//	public void test(MultipartHttpServletRequest request, @LoginUser Principal principal ) {
+//	
+//		System.out.println("멀티파트 : "+request);
+//			
+//	}
+	@PostMapping(path="/post/test")
+	@ResponseBody
+	public String save(
+			@RequestParam Map<String, Object> param,
+			@RequestParam(value="image_file",required=false) MultipartFile[] files // upload file
+			) throws Exception {	
+		System.out.println("파일확인해보자 :" + files );
+		System.out.println("요청확인해보자 :" + param );
+		param.put("files", files);
+		MultipartFile[] files2 = (MultipartFile[]) param.get("files");
+		
+		param.put("file", files2);
+		for(MultipartFile img : files) {
+			System.out.println("이미지 파일 "+img);
+		}
+		return "save";
 	}
 	
 	// 유저 리스트 
