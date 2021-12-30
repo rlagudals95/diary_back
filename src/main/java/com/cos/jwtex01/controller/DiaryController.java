@@ -96,16 +96,21 @@ public class DiaryController {
 	@PostMapping(path="/post/test")
 	@ResponseBody
 	public String save(
+			HttpServletRequest request,
 			@RequestParam Map<String, Object> param,
-			@RequestParam(value="image_file",required=false) MultipartFile[] files // upload file
-			) throws Exception {	
-		System.out.println("파일확인해보자 :" + files );
+			@RequestParam(value="file",required=false) MultipartFile[] files // upload file
+			) throws Exception {
+		System.out.println("확인해보자 :" + request );
+		System.out.println("파일확인해보자 :" + files[0] );
 		System.out.println("요청확인해보자 :" + param );
 		param.put("files", files);
 		MultipartFile[] files2 = (MultipartFile[]) param.get("files");
 		
 		param.put("file", files2);
 		for(MultipartFile img : files) {
+			if(img != null && !img.isEmpty()) {
+				System.out.println("img : "+ img);
+			}
 			System.out.println("이미지 파일 "+img);
 		}
 		return "save";
