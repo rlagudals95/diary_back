@@ -69,8 +69,17 @@ public class DiaryController {
 	
 	
 	@PostMapping("/post")
-	public Diary post(@RequestBody DiaryReqDto diaryReqDto , @LoginUser Principal principal ) {
+	@ResponseBody
+	public Diary post(
+			@RequestPart DiaryReqDto diaryReqDto,
+			@LoginUser Principal principal,
+			@RequestPart(value="file") MultipartFile files
+			//@RequestParam(value="file",required=false) MultipartFile[] files
+//			@RequestPart(value="file",required=false) MultipartFile[] files
+			) {
 		System.out.println("다이어리 추가 : "+diaryReqDto);
+		System.out.println("파일 추가 : "+files);
+	
 		// progress에 score 더하는 로직추가
 		// 게시물의 카테고리 score 가져오자	
 		Long category_no = diaryReqDto.getCategory_no();	
@@ -87,12 +96,25 @@ public class DiaryController {
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
 	
-//	@PostMapping("/post/test")
-//	public void test(MultipartHttpServletRequest request, @LoginUser Principal principal ) {
-//	
-//		System.out.println("멀티파트 : "+request);
+//	@PostMapping("/post")
+//	public Diary post(@RequestBody DiaryReqDto diaryReqDto , @LoginUser Principal principal ) {
+//		System.out.println("다이어리 추가 : "+diaryReqDto);
+//		// progress에 score 더하는 로직추가
+//		// 게시물의 카테고리 score 가져오자	
+//		Long category_no = diaryReqDto.getCategory_no();	
+//		//Optional<Category> category = categoryRepository.findById(category_no);
+//		int before_progress = categoryRepository.findByCategory_no(category_no);
+//		
+//		int after_progress = (int) (before_progress + diaryReqDto.getScore());
+//		if(after_progress >= 100) {
+//			categoryRepository.updateCategoryComplete(category_no);
+//		} else {
+//			categoryRepository.updateCategoryProgress(after_progress, category_no );
+//		}
 //			
+//		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 //	}
+
 	@PostMapping(path="/post/test")
 	@ResponseBody
 	public String save(
