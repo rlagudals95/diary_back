@@ -71,28 +71,37 @@ public class DiaryController {
 	@PostMapping("/post")
 	@ResponseBody
 	public Diary post(
-			@RequestPart DiaryReqDto diaryReqDto,
+			@RequestParam Map<String, Object> param,
 			@LoginUser Principal principal,
-			@RequestPart(value="file") MultipartFile files
-			//@RequestParam(value="file",required=false) MultipartFile[] files
-//			@RequestPart(value="file",required=false) MultipartFile[] files
+			@RequestParam(value="file",required=false) MultipartFile[] files // upload file
 			) {
-		System.out.println("다이어리 추가 : "+diaryReqDto);
+		
+		DiaryReqDto diaryReqDto = new DiaryReqDto ();
+		System.out.println("다이어리 추가 : "+param);
 		System.out.println("파일 추가 : "+files);
-	
-		// progress에 score 더하는 로직추가
-		// 게시물의 카테고리 score 가져오자	
-		Long category_no = diaryReqDto.getCategory_no();	
-		//Optional<Category> category = categoryRepository.findById(category_no);
+		
+		Long category_no = Long.parseLong((String) param.get("category_no"));	
+		
+		// category progress
 		int before_progress = categoryRepository.findByCategory_no(category_no);
 		
-		int after_progress = (int) (before_progress + diaryReqDto.getScore());
+		int score = Integer.parseInt((String) param.get("score")) ;
+		
+		int after_progress = (int) (before_progress + score);
 		if(after_progress >= 100) {
 			categoryRepository.updateCategoryComplete(category_no);
 		} else {
 			categoryRepository.updateCategoryProgress(after_progress, category_no );
 		}
-			
+		awsService.uploadFile(files);
+		
+		//awsService.uploadFile(files);
+		// dto set
+		diaryReqDto.setCategory_no(category_no);
+		diaryReqDto.setContent((String) param.get("content"));
+		diaryReqDto.setScore(Long.parseLong((String) param.get("score")));
+		diaryReqDto.setTitle((String) param.get("title"));	
+		
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
 	
