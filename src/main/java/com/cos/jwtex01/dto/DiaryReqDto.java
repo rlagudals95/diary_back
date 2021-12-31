@@ -13,6 +13,7 @@ public class DiaryReqDto  {
     private String keyword;
     private Long category_no;
     private Long score;
+    private String image_url;
     //private MultipartFile file;
     
 	public Diary toEntity(User user) {
@@ -23,6 +24,7 @@ public class DiaryReqDto  {
 				.keyword(keyword)
 				.user(user)
 				.score(score)
+				.image_url(image_url)
 				.build();
 	}
 }
