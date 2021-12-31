@@ -1,5 +1,6 @@
 package com.cos.jwtex01.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,11 +73,12 @@ public class DiaryController {
 	
 	@PostMapping("/post")
 	@ResponseBody
+	@Transactional(isolation=Isolation.DEFAULT)
 	public Diary post(
 			@RequestParam Map<String, Object> param,
 			@LoginUser Principal principal,
 			@RequestParam(value="file",required=false) MultipartFile[] files // upload file
-			) {
+			) throws IOException {
 		
 		DiaryReqDto diaryReqDto = new DiaryReqDto ();
 		System.out.println("다이어리 추가 : "+param);
