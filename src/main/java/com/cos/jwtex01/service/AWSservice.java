@@ -37,7 +37,7 @@ public class AWSservice {
     private static final String SECRET_KEY = Constants.SECRET_KEY;
     private AmazonS3 amazonS3;
     private static final String prefix = "diary";
-    private static final String s3Url = "https://s3diary.s3.ap-northeast-2.amazonaws.com/diary_file/";
+    private static final String s3Url = "https://s3diary.s3.ap-northeast-2.amazonaws.com/";
     
     @SuppressWarnings("deprecation")
 	public void S3Service() {
@@ -72,7 +72,7 @@ public class AWSservice {
 					
 					String fName = img.getOriginalFilename();				
 					String ext = fName.substring(fName.lastIndexOf(".")+1, fName.length());
-					String uploadKey = /* "diary_file/" + */nowTime + "." + ext;
+					String uploadKey = "diary_file/" + nowTime + "." + ext;
 					
 					System.out.println("이걸 : "+uploadKey);
 					

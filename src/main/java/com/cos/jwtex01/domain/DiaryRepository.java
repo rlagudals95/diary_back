@@ -17,6 +17,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long>{
 			"d.content,\r\n" + 
 			"d.title,\r\n" + 
 			"d.admin_no,\r\n" + 
+			"d.image_url,\r\n" + 
 			"c.name,\r\n" + 
 			"c.category_no,\r\n" + 
 			"c.complete_yn  FROM Diary d \r\n" + 
