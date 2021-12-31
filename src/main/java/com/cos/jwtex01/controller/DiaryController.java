@@ -98,14 +98,14 @@ public class DiaryController {
 			categoryRepository.updateCategoryProgress(after_progress, category_no );
 		}
 		awsService.uploadFile(files);
-		
+		System.out.println("이미지 추가 : " + awsService.uploadFile(files));
 		//awsService.uploadFile(files);
 		// dto set
 		diaryReqDto.setCategory_no(category_no);
 		diaryReqDto.setContent((String) param.get("content"));
 		diaryReqDto.setScore(Long.parseLong((String) param.get("score")));
 		diaryReqDto.setTitle((String) param.get("title"));	
-		
+		diaryReqDto.setImage_url(awsService.uploadFile(files));	
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
 	
