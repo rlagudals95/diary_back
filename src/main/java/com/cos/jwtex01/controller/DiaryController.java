@@ -108,25 +108,6 @@ public class DiaryController {
 		diaryReqDto.setImage_url(awsService.uploadFile(files));	
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
-	
-//	@PostMapping("/post")
-//	public Diary post(@RequestBody DiaryReqDto diaryReqDto , @LoginUser Principal principal ) {
-//		System.out.println("다이어리 추가 : "+diaryReqDto);
-//		// progress에 score 더하는 로직추가
-//		// 게시물의 카테고리 score 가져오자	
-//		Long category_no = diaryReqDto.getCategory_no();	
-//		//Optional<Category> category = categoryRepository.findById(category_no);
-//		int before_progress = categoryRepository.findByCategory_no(category_no);
-//		
-//		int after_progress = (int) (before_progress + diaryReqDto.getScore());
-//		if(after_progress >= 100) {
-//			categoryRepository.updateCategoryComplete(category_no);
-//		} else {
-//			categoryRepository.updateCategoryProgress(after_progress, category_no );
-//		}
-//			
-//		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
-//	}
 
 	@PostMapping(path="/post/test")
 	@ResponseBody
