@@ -14,7 +14,9 @@ import org.springframework.data.repository.query.Param;
 public interface CategoryRepository extends JpaRepository<Category, Long>{
 
 	@Query(value = "SELECT * "
-			+ "FROM Category c WHERE c.admin_no = :admin_no AND c.complete_yn = :complety_yn ORDER BY c.create_date DESC ", nativeQuery = true)
+			+ "FROM Category c WHERE c.admin_no = :admin_no "
+			+ "AND c.complete_yn = :complete_yn "
+			+ "AND c.use_yn = 'Y' ORDER BY c.create_date DESC ", nativeQuery = true)
 	List<Category> findByAdmin_no(@Param("admin_no") Long admin_no, @Param("complete_yn") String complety_yn);
 	
 	@Query(value = "SELECT c.progress "
