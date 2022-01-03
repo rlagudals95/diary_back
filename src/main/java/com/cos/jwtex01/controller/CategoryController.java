@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.jwtex01.config.auth.LoginUser;
@@ -34,8 +35,9 @@ public class CategoryController {
 	private final CategoryRepository categoryRepository;
 	
 	@PostMapping("/list")
-	public List<Category> main(@LoginUser Principal principal) {
-		return categoryRepository.findByAdmin_no(principal.getUser().getAdmin_no());
+	public List<Category> main(@LoginUser Principal principal, @RequestBody Map<String, Object > param) {
+		System.out.println("완료여부 : " + param);
+		return categoryRepository.findByAdmin_no(principal.getUser().getAdmin_no(),(String) param.get("complete_yn"));
 	}
 	
 	@PostMapping("/add")
