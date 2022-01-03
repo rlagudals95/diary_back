@@ -41,5 +41,10 @@ public interface CategoryRepository extends JpaRepository<Category, Long>{
 	@Modifying(clearAutomatically = true)
     @Query(value="UPDATE Category c SET c.complete_yn = 'Y', c.progress = 100 WHERE c.category_no = :category_no", nativeQuery = true)
     int updateCategoryComplete(Long category_no);
-
+	
+	@Transactional
+	@Modifying(clearAutomatically = true)
+    @Query(value="UPDATE Category c SET c.use_yn = 'Y' WHERE c.category_no = :category_no", nativeQuery = true)
+    void updateCategoryUse(Long category_no);
+	
 }	

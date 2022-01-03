@@ -57,4 +57,17 @@ public class CategoryController {
 		int progress =  (int) param.get("progress");
 		return categoryRepository.updateCategoryProgress(id,progress);
 	}
+	
+	// 카테고리 삭제
+	@PostMapping("/delete/{id}")
+	public void delete(@PathVariable Long id ) {
+			
+	}
+	
+	// 카테고리 완료처리
+	@PostMapping("/complete/{id}")
+	public void complete(@PathVariable Long id) {
+		categoryRepository.updateCategoryComplete(id);
+	}
+	
 }
