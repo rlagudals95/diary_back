@@ -18,7 +18,33 @@
 	<properties>
 		<java.version>8</java.version>
 	</properties>
-		
+	
+	
+	<repositories>
+		 <repository>
+			 <snapshots>
+		        <enabled>false</enabled>
+		     </snapshots>
+		     <id>central</id>
+		     <name>Central Repository</name>
+			 <url>https://repo.maven.apache.org/maven2</url>
+		</repository> 
+	</repositories>
+	
+	<pluginRepositories>
+	    <pluginRepository>
+	      <releases>
+	        <updatePolicy>never</updatePolicy>
+	      </releases>
+	      <snapshots>
+	        <enabled>false</enabled>
+	      </snapshots>
+	      <id>central</id>
+	      <name>Central Repository</name>
+	      <url>https://repo.maven.apache.org/maven2</url>
+	    </pluginRepository>
+  	</pluginRepositories>
+
 	<dependencies>
 		
 		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-clean-plugin -->
@@ -27,7 +53,7 @@
 		    <artifactId>maven-clean-plugin</artifactId>
 		    <version>3.1.0</version>
 		</dependency>
-				
+	
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
