@@ -52,7 +52,7 @@ public class Category{
 	@Column(length = 2, nullable = false)
     private String use_yn;
 	@Column(nullable = false)
-
+		
     private int progress;
 	
     @Temporal(TemporalType.TIMESTAMP)

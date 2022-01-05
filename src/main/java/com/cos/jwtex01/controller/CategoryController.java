@@ -1,5 +1,6 @@
 package com.cos.jwtex01.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cos.jwtex01.config.auth.LoginUser;
 import com.cos.jwtex01.config.auth.Principal;
@@ -24,6 +27,7 @@ import com.cos.jwtex01.domain.Diary;
 import com.cos.jwtex01.domain.DiaryRepository;
 import com.cos.jwtex01.dto.CategoryReqDto;
 import com.cos.jwtex01.dto.DiaryReqDto;
+import com.cos.jwtex01.service.AWSservice;
 import com.cos.jwtex01.service.GrammarService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +35,9 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
+	
+	@Autowired
+	private AWSservice awsService;
 	
 	private final CategoryRepository categoryRepository;
 	
@@ -41,9 +48,14 @@ public class CategoryController {
 	}
 	
 	@PostMapping("/add")
-	public Category add(@LoginUser Principal principal, @RequestBody CategoryReqDto categoryReqDto) {
+	public Category add(
+			@LoginUser Principal principal,
+			@RequestPart(value = "key") CategoryReqDto categoryReqDto,
+			@RequestPart(value = "file") MultipartFile[] file) throws IOException {
 		System.out.println("categoryReqDto : "+categoryReqDto);
 		System.out.println("principal : "+principal.getUser());
+		System.out.println("파일 : "+ file);
+		categoryReqDto.setImage_url(awsService.uploadFile(file));	
 		return categoryRepository.save(categoryReqDto.toEntity(principal.getUser()));	
 	}
 	

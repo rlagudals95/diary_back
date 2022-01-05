@@ -81,8 +81,8 @@ public class DiaryController {
 			) throws IOException {
 		
 		DiaryReqDto diaryReqDto = new DiaryReqDto ();
-		System.out.println("다이어리 추가 : "+param);
-		System.out.println("파일 추가 : "+files);
+		//System.out.println("다이어리 추가 : "+param);
+		//System.out.println("파일 추가 : "+files);
 		
 		Long category_no = Long.parseLong((String) param.get("category_no"));	
 		
@@ -98,7 +98,7 @@ public class DiaryController {
 			categoryRepository.updateCategoryProgress(after_progress, category_no );
 		}
 		awsService.uploadFile(files);
-		System.out.println("이미지 추가 : " + awsService.uploadFile(files));
+		//System.out.println("이미지 추가 : " + awsService.uploadFile(files));
 		//awsService.uploadFile(files);
 		// dto set
 		diaryReqDto.setCategory_no(category_no);
