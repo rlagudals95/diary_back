@@ -59,9 +59,9 @@ public class CategoryController {
 	}
 	
 	// 카테고리 삭제
-	@PostMapping("/delete/{id}")
+	@PostMapping("/use/{id}")
 	public void delete(@PathVariable Long id ) {
-			
+		categoryRepository.updateCategoryUse(id);	
 	}
 	
 	// 카테고리 완료처리
