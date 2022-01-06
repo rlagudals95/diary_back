@@ -23,12 +23,12 @@ public class TestController {
 		return NaverService.main(url);
 	}
 	
-//	@GetMapping("/")
-//	public String main() {
-//		//System.out.println("principal : "+principal.getUsername());
-//			
-//		return "<h1>Diary</h1>";
-//	}
+	@GetMapping("/")
+	public String main() {
+		//System.out.println("principal : "+principal.getUsername());
+			
+		return "<h1>Diary API</h1>";
+	}
 	
 }
 
