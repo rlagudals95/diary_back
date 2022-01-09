@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.google.gson.annotations.Since;
@@ -30,6 +31,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder // 빌더 패턴
 @Table(name = "Category")
+@DynamicUpdate
 public class Category{
 	
 	@Id

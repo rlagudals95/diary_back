@@ -36,6 +36,7 @@ import com.cos.jwtex01.domain.Category;
 import com.cos.jwtex01.domain.CategoryRepository;
 import com.cos.jwtex01.domain.Diary;
 import com.cos.jwtex01.domain.DiaryRepository;
+import com.cos.jwtex01.dto.CategoryReqDto;
 import com.cos.jwtex01.dto.DiaryReqDto;
 import com.cos.jwtex01.service.AWSservice;
 import com.cos.jwtex01.service.GrammarService;
@@ -98,7 +99,6 @@ public class DiaryController {
 			categoryRepository.updateCategoryProgress(after_progress, category_no );
 		}
 		awsService.uploadFile(files);
-		//System.out.println("이미지 추가 : " + awsService.uploadFile(files));
 		//awsService.uploadFile(files);
 		// dto set
 		diaryReqDto.setCategory_no(category_no);
@@ -107,29 +107,6 @@ public class DiaryController {
 		diaryReqDto.setTitle((String) param.get("title"));	
 		diaryReqDto.setImage_url(awsService.uploadFile(files));	
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
-	}
-
-	@PostMapping(path="/post/test")
-	@ResponseBody
-	public String save(
-			HttpServletRequest request,
-			@RequestParam Map<String, Object> param,
-			@RequestParam(value="file",required=false) MultipartFile[] files // upload file
-			) throws Exception {
-		System.out.println("확인해보자 :" + request );
-		System.out.println("파일확인해보자 :" + files[0] );
-		System.out.println("요청확인해보자 :" + param );
-		param.put("files", files);
-		MultipartFile[] files2 = (MultipartFile[]) param.get("files");
-		
-		param.put("file", files2);
-		for(MultipartFile img : files) {
-			if(img != null && !img.isEmpty()) {
-				System.out.println("img : "+ img);
-			}
-			System.out.println("이미지 파일 "+img);
-		}
-		return "save";
 	}
 	
 	// 유저 리스트 
@@ -165,6 +142,16 @@ public class DiaryController {
 	public Optional<Diary> deatil(@PathVariable Long id) {
 		Optional<Diary> diary = diaryRepository.findById(id);
 		return diary;
+	}
+	
+	@PostMapping("/update/{id}")
+	public void update(
+			@PathVariable Long id,
+			@LoginUser Principal principal,
+			@RequestPart(value = "key") DiaryReqDto diaryReqDto,
+			@RequestPart(value = "file") MultipartFile[] file) 
+	{
+		//diaryRepository.update(diaryReqDto);
 	}
 	
 	@PostMapping("/grammar")

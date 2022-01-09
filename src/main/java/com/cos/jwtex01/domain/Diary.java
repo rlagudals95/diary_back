@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 
@@ -31,6 +32,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder // 빌더 패턴
 @Table(name = "Diary")
+@DynamicUpdate
 @DynamicInsert // null 것(role)은 제외하고 insert 그래야 role의 default값(user)이 들어감
 public class Diary{
 	

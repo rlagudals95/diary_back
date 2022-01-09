@@ -30,17 +30,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long>{
 			@Param("size") Object size, 
 			@Param("page") Object page);
 	
-//	@Query(value = "SELECT * FROM Diary d " 
-//			+ "LEFT JOIN Category c on d.category_no = c.category_no "
-//			+ "WHERE d.admin_no = :admin_no "
-//			+ "ORDER BY d.create_date DESC "
-//			+ "LIMIT :page, :size", nativeQuery = true)
-//	List<Map<String,Object>> findByAdmin_no(
-//			@Param("admin_no") Long admin_no, 
-//			@Param("size") Object size, 
-//			@Param("page") Object page);
-	
-	
 	
 	@Query(value = "SELECT * FROM Diary WHERE diary_no = ?1", nativeQuery = true)
 	Optional <Diary> findByDiary_no(Long diary_no);

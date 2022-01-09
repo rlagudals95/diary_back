@@ -52,11 +52,6 @@ public class CategoryController {
 			@LoginUser Principal principal,
 			@RequestPart(value = "key") CategoryReqDto categoryReqDto,
 			@RequestPart(value = "file") MultipartFile[] file) throws IOException {
-		System.out.println("categoryReqDto : "+categoryReqDto);
-		System.out.println("principal : "+principal.getUser());
-		System.out.println("파일 : "+ file);
-		System.out.println("유알엘 리턴 : " + awsService.uploadFile(file));
-		
 		if (awsService.uploadFile(file) != null) {
 			categoryReqDto.setImage_url(awsService.uploadFile(file));		
 		}
