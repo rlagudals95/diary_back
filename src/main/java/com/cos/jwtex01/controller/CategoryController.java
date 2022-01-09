@@ -55,7 +55,12 @@ public class CategoryController {
 		System.out.println("categoryReqDto : "+categoryReqDto);
 		System.out.println("principal : "+principal.getUser());
 		System.out.println("파일 : "+ file);
-		categoryReqDto.setImage_url(awsService.uploadFile(file));	
+		System.out.println("유알엘 리턴 : " + awsService.uploadFile(file));
+		
+		if (awsService.uploadFile(file) != null) {
+			categoryReqDto.setImage_url(awsService.uploadFile(file));		
+		}
+		categoryReqDto.setCategory_role("1");
 		return categoryRepository.save(categoryReqDto.toEntity(principal.getUser()));	
 	}
 	

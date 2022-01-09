@@ -10,6 +10,7 @@ import lombok.Data;
 public class CategoryReqDto {
     private String name;
     private String image_url;
+    private String category_role;
     
 	public Category toEntity(User user) {
 		return Category.builder()
@@ -18,7 +19,9 @@ public class CategoryReqDto {
 				.complete_yn("N")
 				.use_yn("Y")
 				.image_url(image_url)
+				.category_role(category_role)
 				.progress(Integer.parseInt("0"))
 				.build();
 	}
+
 }
