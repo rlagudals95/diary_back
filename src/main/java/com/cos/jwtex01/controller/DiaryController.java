@@ -82,14 +82,10 @@ public class DiaryController {
 			) throws IOException {
 		
 		DiaryReqDto diaryReqDto = new DiaryReqDto ();
-		//System.out.println("다이어리 추가 : "+param);
-		//System.out.println("파일 추가 : "+files);
-		
 		Long category_no = Long.parseLong((String) param.get("category_no"));	
-		
+
 		// category progress
 		int before_progress = categoryRepository.findByCategory_no(category_no);
-		
 		int score = Integer.parseInt((String) param.get("score")) ;
 		
 		int after_progress = (int) (before_progress + score);
@@ -106,16 +102,13 @@ public class DiaryController {
 		diaryReqDto.setScore(Long.parseLong((String) param.get("score")));
 		diaryReqDto.setTitle((String) param.get("title"));	
 		diaryReqDto.setImage_url(awsService.uploadFile(files));	
+		
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
 	
 	// 유저 리스트 
 	@PostMapping("/list")
 	public List<Map<String, Object>> list(@LoginUser Principal principal, @RequestBody Map<String, Object> param) {
-		//Pageable paging = PageRequest.of(0, 10, Sort.Direction.DESC, "create_date");
-		
-		System.out.println("페이징 : "+ param);
-		System.out.println("어드민 넘qj : "+principal.getUser().getAdmin_no());
 		return diaryRepository.findByAdmin_no(principal.getUser().getAdmin_no(), param.get("size"), param.get("page"));
 	}
 	
@@ -144,7 +137,7 @@ public class DiaryController {
 		return diary;
 	}
 	
-	@PostMapping("/update/{id}")
+	@PostMapping("/edit/{id}")
 	public void update(
 			@PathVariable Long id,
 			@LoginUser Principal principal,
