@@ -39,6 +39,7 @@ import com.cos.jwtex01.domain.DiaryRepository;
 import com.cos.jwtex01.dto.CategoryReqDto;
 import com.cos.jwtex01.dto.DiaryReqDto;
 import com.cos.jwtex01.service.AWSservice;
+import com.cos.jwtex01.service.CategoryService;
 import com.cos.jwtex01.service.GrammarService;
 import com.cos.jwtex01.service.SpellService;
 import com.cos.jwtex01.service.WorkcheckService;
@@ -61,6 +62,9 @@ public class DiaryController {
 	@Autowired
 	private AWSservice awsService;
 	
+	@Autowired
+	private CategoryService categoryService;
+	
 	private final DiaryRepository diaryRepository;
 	
 	private final CategoryRepository categoryRepository;
@@ -82,14 +86,10 @@ public class DiaryController {
 			) throws IOException {
 		
 		DiaryReqDto diaryReqDto = new DiaryReqDto ();
-		//System.out.println("다이어리 추가 : "+param);
-		//System.out.println("파일 추가 : "+files);
-		
 		Long category_no = Long.parseLong((String) param.get("category_no"));	
-		
+
 		// category progress
 		int before_progress = categoryRepository.findByCategory_no(category_no);
-		
 		int score = Integer.parseInt((String) param.get("score")) ;
 		
 		int after_progress = (int) (before_progress + score);
@@ -98,24 +98,46 @@ public class DiaryController {
 		} else {
 			categoryRepository.updateCategoryProgress(after_progress, category_no );
 		}
+		
 		awsService.uploadFile(files);
 		//awsService.uploadFile(files);
 		// dto set
 		diaryReqDto.setCategory_no(category_no);
 		diaryReqDto.setContent((String) param.get("content"));
-		diaryReqDto.setScore(Long.parseLong((String) param.get("score")));
+		diaryReqDto.setScore(Integer.parseInt((String) param.get("score")));
 		diaryReqDto.setTitle((String) param.get("title"));	
 		diaryReqDto.setImage_url(awsService.uploadFile(files));	
+		
+		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
+	}
+	
+	@PostMapping("/post2")
+	@ResponseBody
+	@Transactional(isolation=Isolation.DEFAULT)
+	public Diary post2(
+			@RequestPart(value ="key") DiaryReqDto diaryReqDto,
+			@RequestParam(value="file",required=false) MultipartFile[] files, // upload file
+			@LoginUser Principal principal	
+			) throws IOException {
+	
+		Long category_no = diaryReqDto.getCategory_no();	
+		
+		// category progress
+		int before_progress = categoryRepository.findByCategory_no(category_no);
+		int score = diaryReqDto.getScore();
+		int after_progress = (int) (before_progress + score);
+		
+		categoryService.progress(after_progress, category_no);
+		
+		awsService.uploadFile(files);
+		diaryReqDto.setImage_url(awsService.uploadFile(files));	
+		
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
 	}
 	
 	// 유저 리스트 
 	@PostMapping("/list")
 	public List<Map<String, Object>> list(@LoginUser Principal principal, @RequestBody Map<String, Object> param) {
-		//Pageable paging = PageRequest.of(0, 10, Sort.Direction.DESC, "create_date");
-		
-		System.out.println("페이징 : "+ param);
-		System.out.println("어드민 넘qj : "+principal.getUser().getAdmin_no());
 		return diaryRepository.findByAdmin_no(principal.getUser().getAdmin_no(), param.get("size"), param.get("page"));
 	}
 	
@@ -144,7 +166,7 @@ public class DiaryController {
 		return diary;
 	}
 	
-	@PostMapping("/update/{id}")
+	@PostMapping("/edit/{id}")
 	public void update(
 			@PathVariable Long id,
 			@LoginUser Principal principal,
