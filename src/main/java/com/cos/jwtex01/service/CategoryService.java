@@ -19,4 +19,12 @@ public class CategoryService {
 		}
 	}
 	
+	public void subtractProgress (int after_progress, long category_no) {
+		if(after_progress >= 100) {
+			categoryRepository.updateCategoryComplete(category_no);
+		} else {
+			categoryRepository.updateCategoryProgress(after_progress, category_no );
+		}
+	}
+	
 }

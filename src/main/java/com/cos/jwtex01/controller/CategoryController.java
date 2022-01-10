@@ -65,9 +65,9 @@ public class CategoryController {
 	}
 	
 	@PostMapping("/edit/{id}")
-	public Category edit(@PathVariable Long id, @RequestBody Map<String, Object> param) {
+	public void edit(@PathVariable Long id, @RequestBody Map<String, Object> param) {
 		int progress =  (int) param.get("progress");
-		return categoryRepository.updateCategoryProgress(id,progress);
+		categoryRepository.updateCategoryProgress(id,progress);
 	}
 	
 	// 카테고리 삭제

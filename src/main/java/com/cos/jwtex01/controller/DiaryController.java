@@ -40,6 +40,7 @@ import com.cos.jwtex01.dto.CategoryReqDto;
 import com.cos.jwtex01.dto.DiaryReqDto;
 import com.cos.jwtex01.service.AWSservice;
 import com.cos.jwtex01.service.CategoryService;
+import com.cos.jwtex01.service.DiaryService;
 import com.cos.jwtex01.service.GrammarService;
 import com.cos.jwtex01.service.SpellService;
 import com.cos.jwtex01.service.WorkcheckService;
@@ -58,6 +59,9 @@ public class DiaryController {
 	
 	@Autowired
 	private SpellService spellService;
+	
+	@Autowired
+	private DiaryService diaryService;
 	
 	@Autowired
 	private AWSservice awsService;
@@ -166,6 +170,21 @@ public class DiaryController {
 		return diary;
 	}
 	
+	@PostMapping("/delete/{id}")
+	public void delete(@PathVariable Long id, @RequestBody Map<String, Object> param) {
+		System.out.println("카테고리 삭제 파람 : " +param);
+		int _category_no = (int) param.get("category_no") ;
+		long category_no = _category_no;
+		
+		int before_progress = categoryRepository.findByCategory_no(category_no);
+		int score = (int) param.get("score");
+		int after_progress = (int) (before_progress - score);
+		
+		categoryRepository.updateCategoryProgress(category_no, after_progress);
+		
+		diaryService.delete(id);
+	}
+	
 	@PostMapping("/edit/{id}")
 	public void update(
 			@PathVariable Long id,
@@ -173,8 +192,10 @@ public class DiaryController {
 			@RequestPart(value = "key") DiaryReqDto diaryReqDto,
 			@RequestPart(value = "file") MultipartFile[] file) 
 	{
-		//diaryRepository.update(diaryReqDto);
+		diaryService.update(diaryReqDto, id);
 	}
+	
+	
 	
 	@PostMapping("/grammar")
 	public String grammar(@RequestBody Map<String, Object> param) {
