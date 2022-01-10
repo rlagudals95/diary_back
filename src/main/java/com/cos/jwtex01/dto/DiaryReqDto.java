@@ -12,7 +12,7 @@ public class DiaryReqDto  {
     private String content;
     private String keyword;
     private Long category_no;
-    private Long score;
+    private int score;
     private String image_url;
     //private MultipartFile file;
     

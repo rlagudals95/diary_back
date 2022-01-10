@@ -39,6 +39,7 @@ import com.cos.jwtex01.domain.DiaryRepository;
 import com.cos.jwtex01.dto.CategoryReqDto;
 import com.cos.jwtex01.dto.DiaryReqDto;
 import com.cos.jwtex01.service.AWSservice;
+import com.cos.jwtex01.service.CategoryService;
 import com.cos.jwtex01.service.GrammarService;
 import com.cos.jwtex01.service.SpellService;
 import com.cos.jwtex01.service.WorkcheckService;
@@ -60,6 +61,9 @@ public class DiaryController {
 	
 	@Autowired
 	private AWSservice awsService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	private final DiaryRepository diaryRepository;
 	
@@ -94,13 +98,38 @@ public class DiaryController {
 		} else {
 			categoryRepository.updateCategoryProgress(after_progress, category_no );
 		}
+		
 		awsService.uploadFile(files);
 		//awsService.uploadFile(files);
 		// dto set
 		diaryReqDto.setCategory_no(category_no);
 		diaryReqDto.setContent((String) param.get("content"));
-		diaryReqDto.setScore(Long.parseLong((String) param.get("score")));
+		diaryReqDto.setScore(Integer.parseInt((String) param.get("score")));
 		diaryReqDto.setTitle((String) param.get("title"));	
+		diaryReqDto.setImage_url(awsService.uploadFile(files));	
+		
+		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	
+	}
+	
+	@PostMapping("/post2")
+	@ResponseBody
+	@Transactional(isolation=Isolation.DEFAULT)
+	public Diary post2(
+			@RequestPart(value ="key") DiaryReqDto diaryReqDto,
+			@RequestParam(value="file",required=false) MultipartFile[] files, // upload file
+			@LoginUser Principal principal	
+			) throws IOException {
+	
+		Long category_no = diaryReqDto.getCategory_no();	
+		
+		// category progress
+		int before_progress = categoryRepository.findByCategory_no(category_no);
+		int score = diaryReqDto.getScore();
+		int after_progress = (int) (before_progress + score);
+		
+		categoryService.progress(after_progress, category_no);
+		
+		awsService.uploadFile(files);
 		diaryReqDto.setImage_url(awsService.uploadFile(files));	
 		
 		return diaryRepository.save(diaryReqDto.toEntity(principal.getUser()));	

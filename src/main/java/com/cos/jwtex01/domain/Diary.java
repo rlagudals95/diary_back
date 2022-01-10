@@ -60,7 +60,7 @@ public class Diary{
     private String image_url;
     
     @Column
-    private Long score;
+    private int score;
     
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp // insert 시 자동 생성
