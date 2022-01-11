@@ -13,15 +13,27 @@ import org.springframework.data.repository.query.Param;
 
 public interface CategoryRepository extends JpaRepository<Category, Long>{
 
-	@Query(value = "SELECT * "
-			+ "FROM Category c WHERE c.admin_no = :admin_no "
+	@Query(value = "SELECT "
+			+ "c.category_no, "
+			+ "c.complete_yn, "
+			+ "c.progress, "
+			+ "c.name, "
+			+ "c.image_url, "
+			+ "c.use_yn, "
+			+ "DATE_FORMAT(c.create_date, '%Y-%m-%d %p %h:%i' ) as create_date "
+			+ "FROM Category c "
+			+ "WHERE c.admin_no = :admin_no "
 			+ "AND c.complete_yn = :complete_yn "
 			+ "AND c.use_yn = 'Y' ORDER BY c.create_date DESC ", nativeQuery = true)
-	List<Category> findByAdmin_no(@Param("admin_no") Long admin_no, @Param("complete_yn") String complety_yn);
+	List<Map<String,Object>> findByAdmin_no(@Param("admin_no") Long admin_no, @Param("complete_yn") String complety_yn);
 	
 	@Query(value = "SELECT c.progress "
 			+ "FROM Category c WHERE c.category_no = :category_no", nativeQuery = true)
 	int findByCategory_no(@Param("category_no") Long category_no);
+	
+	// 완료 되지 않은 카테고리 수 제한 10개
+	@Query(value = "select * from Category where admin_no = :admin_no AND complete_yn != 'Y'", nativeQuery = true)
+	List<Map<String, Object>> findNoCompleCategory(@Param("admin_no") Long admin_no);
 	
 	@Query(value = "SELECT * "
 			+ "FROM Category c WHERE c.category_no = :category_no", nativeQuery = true)
