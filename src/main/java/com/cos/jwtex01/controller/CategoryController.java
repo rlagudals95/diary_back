@@ -42,7 +42,7 @@ public class CategoryController {
 	private final CategoryRepository categoryRepository;
 	
 	@PostMapping("/list")
-	public List<Category> main(@LoginUser Principal principal, @RequestBody Map<String, Object > param) {
+	public List<Map<String,Object>> main(@LoginUser Principal principal, @RequestBody Map<String, Object > param) {
 		System.out.println("완료여부 : " + param);
 		return categoryRepository.findByAdmin_no(principal.getUser().getAdmin_no(),(String) param.get("complete_yn"));
 	}
