@@ -35,7 +35,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long>{
 	Optional <Diary> findByDiary_no(Long diary_no);
 	
 	
-	@Query(value = "select group_concat(title, content) from Diary d where :admin_no", nativeQuery = true)
+	@Query(value = "select group_concat(title, content) from Diary d where d.admin_no = :admin_no", nativeQuery = true)
 	String findKeyword(@Param("admin_no") Long admin_no);
 
 //	@Modifying(clearAutomatically = true)

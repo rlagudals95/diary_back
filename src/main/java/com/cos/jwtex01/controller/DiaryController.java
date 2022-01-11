@@ -75,7 +75,7 @@ public class DiaryController {
 	
 	@PostMapping("/main")
 	public String main(@LoginUser Principal principal) {
-		
+		System.out.println("어드민 번호 : "+principal.getUser().getAdmin_no());
 		return (String) diaryRepository.findKeyword(principal.getUser().getAdmin_no());
 	}
 	
