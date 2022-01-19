@@ -29,7 +29,7 @@ public class UserController {
 		return userRepository.save(joinReqDto.toEntity());
 	}
 	
-	@GetMapping("/Oauth/kakao")
+	@GetMapping("/oauth2/kakao")
 	public String kakao(@RequestParam Map<String, Object> param) {
 		
 		return "카카오 로그인 성공!";
