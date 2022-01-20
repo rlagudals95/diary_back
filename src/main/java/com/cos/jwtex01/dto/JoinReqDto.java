@@ -11,6 +11,8 @@ public class JoinReqDto {
 	private String password;
 	private String email;
 	private String name;
+	private String birthday;
+	private String join_type;
 	
 	public User toEntity() {
 		return User.builder()
@@ -19,6 +21,8 @@ public class JoinReqDto {
 				.email(email)
 				.name(name)
 				.role("ROLE_USER")
+				.join_type("01")
+				.birthday(birthday)
 				.build();
 	}
 }

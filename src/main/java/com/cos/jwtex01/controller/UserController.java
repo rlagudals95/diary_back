@@ -1,10 +1,19 @@
 package com.cos.jwtex01.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,9 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cos.jwtex01.domain.User;
 import com.cos.jwtex01.domain.UserRepository;
 import com.cos.jwtex01.dto.JoinReqDto;
-import com.cos.jwtex01.dto.LoginReqDto;
+import com.cos.jwtex01.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
+
 import com.cos.jwtex01.config.Constants;
 
 @RestController
@@ -28,7 +38,11 @@ public class UserController {
 	
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
+	
+	@Autowired
+	private AuthService authService;
+	
+	
 	@PostMapping("/join")
 	public User join(@RequestBody JoinReqDto joinReqDto) {
 		joinReqDto.setPassword(bCryptPasswordEncoder.encode(joinReqDto.getPassword()));
@@ -46,36 +60,22 @@ public class UserController {
 	}
 	
 	// 카카오 연동정보 조회
-//	@RequestMapping(value = "/login/oauth_kakao")
-//	public String oauthKakao(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		
-//	    String code = request.getParameter("code");
-//	    String error = request.getParameter("error");
-//	    // 카카오로그인 페이지에서 취소버튼 눌렀을경우
-//	    if (error != null) {
-//	        if (error.equals("access_denied")) {
-//	            return "redirect:/login";
-//	        }
-//	    }
-//
-//	    String accessToken = getAccessToken(code);
-//	    String kakaoUniqueNo = getKakaoUniqueNo(accessToken);
-//
-//	    if (kakaoUniqueNo != null && !kakaoUniqueNo.equals("")) {
-//	        /** 
-//	        
-//	            TO DO : 리턴받은 kakaoUniqueNo에 해당하는 회원정보 조회 후 로그인 처리 후 메인으로 이동
-//	        
-//	        */
-//
-//	    return "redirect:/";
-//	    
-//	    // 카카오톡 정보조회 실패했을경우
-//	    } else {
-//	        throw new ErrorMessage("카카오톡 정보조회에 실패했습니다.");
-//	    }
-//
-//	}
+	@PostMapping(value = "/login/oauth_kakao")
+	public Map<String, Object> oauthKakao(@RequestBody Map<String, Object> param ) throws Exception {
+		String code= (String) param.get("code");
+		System.out.println("#########" + code);
+        String access_Token = authService.getAccessToken(code);
+        System.out.println("###access_Token#### : " + access_Token);
+        
+        
+        HashMap<String, Object> userInfo = authService.getUserInfo(access_Token);
+        System.out.println("###access_Token#### : " + access_Token);
+        System.out.println("###userInfo#### : " + userInfo.get("email"));
+        System.out.println("###nickname#### : " + userInfo.get("nickname"));
+        
+        return userInfo; //본인 원하는 경로 설정
+	}
+  
 }
 
 

@@ -48,16 +48,27 @@ public class User {
     @Column(nullable = false)
     private String name;
     
-    @Column(length = 400, nullable = false)
+    @Column(nullable = true)
+    private String nickname;
+    
+    @Column(length = 400, nullable = true)
     private String password;
     
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
-
+    
     @Column(name = "role")
     private String role;
     
+    @Column(length = 2, nullable = true)
+    private String join_type;
+    
+    @Column(length = 400, nullable = true)
+    private String token;
 
+    @Column(nullable = true)
+    private String birthday;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp // insert 시 자동 생성
     private Date create_date;
