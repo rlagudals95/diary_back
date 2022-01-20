@@ -10,6 +10,7 @@ public class Constants {
 	//naver
 	public static final String naverClientId = "fkIjAvzP_QnqzpRVefmI";
 	public static final String naverClientSecret = "H3gOnkdn_e";
+
 	//kakao
 	public static final String kakaoApiKey = "9a02524f15a3577f60c041db6dbef087";
 	public static final String kakaoAuthUrl= "https://kauth.kakao.com";
@@ -17,5 +18,6 @@ public class Constants {
 	//auth
 	public static final String redirectUri = "http://localhost:19006/";
 	
+
 }
 
