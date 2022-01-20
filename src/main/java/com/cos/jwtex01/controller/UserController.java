@@ -1,25 +1,15 @@
 package com.cos.jwtex01.controller;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +21,8 @@ import com.cos.jwtex01.service.AuthService;
 import lombok.RequiredArgsConstructor;
 
 import com.cos.jwtex01.config.Constants;
+import com.cos.jwtex01.config.auth.LoginUser;
+import com.cos.jwtex01.config.auth.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -75,7 +67,17 @@ public class UserController {
         
         return userInfo; //본인 원하는 경로 설정
 	}
-  
+	
+	@PostMapping(value = "/setBirthday")
+	public String setBirthday(@RequestBody Map<String, Object> param ) throws Exception {
+		
+		String username = (String) param.get("username");
+		String birthday = (String) param.get("birthday");
+		userRepository.setBirthday(username, birthday);
+		
+        return "생일 등록 성공"; //본인 원하는 경로 설정
+	}
+	
 }
 
 
