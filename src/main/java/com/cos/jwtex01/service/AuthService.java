@@ -20,7 +20,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.cos.jwtex01.config.Constants;
-import com.cos.jwtex01.domain.User;
 import com.cos.jwtex01.domain.UserRepository;
 import com.cos.jwtex01.dto.JoinReqDto;
 import com.google.gson.JsonElement;
@@ -32,8 +31,11 @@ import com.google.gson.JsonParser;
 @Service
 public class AuthService {
 
+	
 	@Autowired
 	private UserRepository userRepository;
+	
+	/* 카카오로그인 */
 	
 	@SuppressWarnings("unused")
 	private void kakao () {
@@ -131,7 +133,7 @@ public class AuthService {
         return userInfo;
     }
     
-  //토큰발급
+    //토큰발급
   	public String getAccessToken (String authorize_code) {
           String access_Token = "";
           String refresh_Token = "";
@@ -189,4 +191,12 @@ public class AuthService {
 
           return access_Token;
       }
+  	
+  	
+  	  /* 네이버로그인 */
+  	
+  	
+  		
+  		
+  		
 }
