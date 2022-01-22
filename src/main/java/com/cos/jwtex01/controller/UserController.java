@@ -120,7 +120,7 @@ public class UserController {
 	    // 로그인 팝업창에서 취소버튼 눌렀을경우
 	    if ( error != null ){
 	        if(error.equals("access_denied")){
-	            return "redirect:/login";
+	            //return "redirect:/login";
 	        }
 	    }
 
@@ -130,22 +130,24 @@ public class UserController {
 	    String loginInfo = naverAuthService.getUserProfile(session, oauthToken);
 	    System.out.println("네이버 auth : " +loginInfo);
 	    // JSON 형태로 변환
-//	    Object obj = parser.parse(loginInfo);
-//	    JSONObject jsonObj = JSONObject.fromObject(gson.toJson(obj));
-//	    JSONObject callbackResponse = (JSONObject) jsonObj.get("response");
-//	    
-//	    String naverUniqueNo = callbackResponse.get("id").toString();
-//	    
-//	    if (naverUniqueNo != null && !naverUniqueNo.equals("")) {
-//
-//	        /** 
-//	            TO DO : 리턴받은 naverUniqueNo 해당하는 회원정보 조회 후 로그인 처리 후 메인으로 이동
-//	        */
-//
-//	    // 네이버 정보조회 실패
-//	    } else {
-//	        throw new Exception("네이버 정보조회에 실패했습니다.");
-//	    }
+	  
+	    
+	    Object obj = parser.parse(loginInfo);
+	    JSONObject jsonObj = (JSONObject) obj;
+	    JSONObject callbackResponse = (JSONObject) jsonObj.get("response");
+	    
+	    String naverUniqueNo = callbackResponse.get("id").toString();
+	    
+	    if (naverUniqueNo != null && !naverUniqueNo.equals("")) {
+
+	        /** 
+	            TO DO : 리턴받은 naverUniqueNo 해당하는 회원정보 조회 후 로그인 처리 후 메인으로 이동
+	        */
+
+	    // 네이버 정보조회 실패
+	    } else {
+	        throw new Exception("네이버 정보조회에 실패했습니다.");
+	    }
 
 	}
 }
