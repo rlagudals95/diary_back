@@ -82,7 +82,7 @@ public class AuthService {
             conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 
             int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
+            System.out.println("responseCode : " + responseCode);                                                                                                                                                                    
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -109,7 +109,7 @@ public class AuthService {
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
             userInfo.put("id", id);
-            userInfo.put("birthday", birthday);
+            userInfo.put("birthday", birthday);    
             
             if ( userRepository.findByUsername(id) == null) {
             	JoinReqDto joinReqDto = new JoinReqDto();
