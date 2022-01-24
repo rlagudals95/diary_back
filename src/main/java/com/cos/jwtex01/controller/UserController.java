@@ -1,6 +1,7 @@
 package com.cos.jwtex01.controller;
 
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,15 +12,14 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.cos.jwtex01.domain.User;
 import com.cos.jwtex01.domain.UserRepository;
@@ -27,16 +27,20 @@ import com.cos.jwtex01.dto.JoinReqDto;
 import com.cos.jwtex01.service.AuthService;
 import com.cos.jwtex01.service.NaverAuthService;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.google.gson.Gson;
-import com.sun.el.parser.ParseException;
 
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 
 import com.cos.jwtex01.config.Constants;
 
+
+@Component
 @RestController
 @RequiredArgsConstructor
 public class UserController {
+	
+	@Value("${redirectUri}")
+	private String redirectUri;
 	
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -57,9 +61,9 @@ public class UserController {
 	// 카카오 로그인창 호출
 	@RequestMapping(value = "/login/getKakaoAuthUrl")
 	public @ResponseBody String getKakaoAuthUrl(HttpServletRequest request) throws Exception {
-		
+		System.out.println("환경변수확인 : " + redirectUri);
 		System.out.println("확인!! :" + Constants.kakaoAuthUrl + "//" + Constants.kakaoApiKey + "//" + Constants.redirectUri);
-		String reqUrl = Constants.kakaoAuthUrl + "/oauth/authorize?client_id=" + Constants.kakaoApiKey + "&redirect_uri="+ Constants.redirectUri + "&response_type=code";
+		String reqUrl = Constants.kakaoAuthUrl + "/oauth/authorize?client_id=" + Constants.kakaoApiKey + "&redirect_uri="+ redirectUri + "&response_type=code";
 		System.out.println("완성 : "+ reqUrl);
 		return reqUrl;
 	}
