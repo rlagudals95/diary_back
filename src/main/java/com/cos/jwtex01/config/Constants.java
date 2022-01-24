@@ -16,8 +16,8 @@ public class Constants {
 	public static final String kakaoAuthUrl= "https://kauth.kakao.com";
 	
 	//auth
-	public static final String redirectUri = "http://localhost:3000/";
-	public static final String redirectUriProd = "ec2-3-34-146-254.ap-northeast-2.compute.amazonaws.com:8000/";
+	//public static final String redirectUri = "http://localhost:3000/";
+	//public static final String redirectUriProd = "ec2-3-34-146-254.ap-northeast-2.compute.amazonaws.com:8000/";
 
 }
 

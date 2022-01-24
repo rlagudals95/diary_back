@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -31,6 +32,9 @@ import com.google.gson.JsonParser;
 @Service
 public class AuthService {
 
+	
+	@Value("${redirectUri}")
+	private String redirectUri;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -153,7 +157,7 @@ public class AuthService {
               StringBuilder sb = new StringBuilder();
               sb.append("grant_type=authorization_code");
               sb.append("&client_id="+ Constants.kakaoApiKey);  //본인이 발급받은 key
-              sb.append("&redirect_uri=" + Constants.redirectUri);     // 본인이 설정해 놓은 경로
+              sb.append("&redirect_uri=" + redirectUri);     // 본인이 설정해 놓은 경로
               sb.append("&code=" + authorize_code);
               bw.write(sb.toString());
               bw.flush();
