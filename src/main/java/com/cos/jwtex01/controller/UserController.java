@@ -62,7 +62,7 @@ public class UserController {
 	@RequestMapping(value = "/login/getKakaoAuthUrl")
 	public @ResponseBody String getKakaoAuthUrl(HttpServletRequest request) throws Exception {
 		System.out.println("환경변수확인 : " + redirectUri);
-		System.out.println("확인!! :" + Constants.kakaoAuthUrl + "//" + Constants.kakaoApiKey + "//" + Constants.redirectUri);
+		System.out.println("확인!! :" + Constants.kakaoAuthUrl + "//" + Constants.kakaoApiKey + "//" + redirectUri);
 		String reqUrl = Constants.kakaoAuthUrl + "/oauth/authorize?client_id=" + Constants.kakaoApiKey + "&redirect_uri="+ redirectUri + "&response_type=code";
 		System.out.println("완성 : "+ reqUrl);
 		return reqUrl;

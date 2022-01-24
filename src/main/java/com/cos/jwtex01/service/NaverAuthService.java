@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.UUID;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.github.scribejava.core.builder.ServiceBuilder;
@@ -22,9 +23,11 @@ import com.cos.jwtex01.naver.NaverLoginApi;
 @Service
 public class NaverAuthService {
 	
+	@Value("${redirectUri}")
+	private String redirectUri;
+	
 	private final static String CLIENT_ID = Constants.naverClientId;
 	private final static String CLIENT_SECRET = Constants.naverClientSecret;
-	private final static String REDIRECT_URI = Constants.redirectUri;
 	private final static String SESSION_STATE = "oauth_state";
 	/* 프로필 조회 API URL */
 	private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
@@ -39,7 +42,7 @@ public class NaverAuthService {
         OAuth20Service oauthService = new ServiceBuilder()
                 .apiKey(CLIENT_ID)
                 .apiSecret(CLIENT_SECRET)
-                .callback(REDIRECT_URI)
+                .callback(redirectUri)
                 .state(state) //앞서 생성한 난수값을 인증 URL생성시 사용함
                 .build(NaverLoginApi.instance());
         return oauthService.getAuthorizationUrl();
@@ -54,7 +57,7 @@ public class NaverAuthService {
             OAuth20Service oauthService = new ServiceBuilder()
                     .apiKey(CLIENT_ID)
                     .apiSecret(CLIENT_SECRET)
-                    .callback(REDIRECT_URI)
+                    .callback(redirectUri)
                     .state(state)
                     .build(NaverLoginApi.instance());
 
@@ -86,7 +89,7 @@ public class NaverAuthService {
         OAuth20Service oauthService = new ServiceBuilder()
                 .apiKey(CLIENT_ID)
                 .apiSecret(CLIENT_SECRET)
-                .callback(REDIRECT_URI).build(NaverLoginApi.instance());
+                .callback(redirectUri).build(NaverLoginApi.instance());
 
         OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_API_URL, oauthService);
         oauthService.signRequest(oauthToken, request);
