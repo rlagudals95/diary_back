@@ -228,7 +228,7 @@
 	            <plugins>
 			        <plugin>
 			            <groupId>org.apache.maven.plugins</groupId>
-			            <artifactId>maven-war-plugin</artifactId>
+			            <artifactId>maven-jar-plugin</artifactId>
 			            <configuration>
 			                <outputDirectory>/home/ubuntu/diary_api</outputDirectory>
 			                <!-- <warName>${war.file.name}</warName> -->
@@ -247,7 +247,7 @@
 	            <plugins>
 			        <plugin>
 			            <groupId>org.apache.maven.plugins</groupId>
-			            <artifactId>maven-war-plugin</artifactId>
+			            <artifactId>maven-jar-plugin</artifactId>
 			            <configuration>
 			                <outputDirectory>/home/ubuntu/diary_api</outputDirectory>
 			                <jarName>${jar.file.name}</jarName> 
