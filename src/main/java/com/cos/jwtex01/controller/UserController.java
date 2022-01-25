@@ -60,10 +60,11 @@ public class UserController {
 	
 	// 카카오 로그인창 호출
 	@RequestMapping(value = "/login/getKakaoAuthUrl")
-	public @ResponseBody String getKakaoAuthUrl(HttpServletRequest request) throws Exception {
+	public @ResponseBody String getKakaoAuthUrl(@RequestBody Map<String, Object> param) throws Exception {
+		String redirectParam = (String) param.get("redirectUri");
 		System.out.println("환경변수확인 : " + redirectUri);
 		System.out.println("확인!! :" + Constants.kakaoAuthUrl + "//" + Constants.kakaoApiKey + "//" + redirectUri);
-		String reqUrl = Constants.kakaoAuthUrl + "/oauth/authorize?client_id=" + Constants.kakaoApiKey + "&redirect_uri="+ redirectUri + "&response_type=code";
+		String reqUrl = Constants.kakaoAuthUrl + "/oauth/authorize?client_id=" + Constants.kakaoApiKey + "&redirect_uri="+ redirectParam + "&response_type=code";
 		System.out.println("완성 : "+ reqUrl);
 		return reqUrl;
 	}
@@ -75,6 +76,7 @@ public class UserController {
 		System.out.println("#########" + code);
         String access_Token = authService.getAccessToken(code);
         System.out.println("###access_Token#### : " + access_Token);
+        
         
         
         HashMap<String, Object> userInfo = authService.getUserInfo(access_Token);
