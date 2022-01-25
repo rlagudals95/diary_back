@@ -39,8 +39,9 @@ import com.cos.jwtex01.config.Constants;
 @RequiredArgsConstructor
 public class UserController {
 	
-	@Value("${redirectUri}")
-	private String redirectUri;
+	/*
+	 * @Value("${redirectUri}") private String redirectUri;
+	 */
 	
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -60,27 +61,26 @@ public class UserController {
 	
 	// 카카오 로그인창 호출
 	@RequestMapping(value = "/login/getKakaoAuthUrl")
-	public @ResponseBody String getKakaoAuthUrl(@RequestBody Map<String, Object> param) throws Exception {
-		String redirectParam = (String) param.get("redirectUri");
+	public @ResponseBody String getKakaoAuthUrl(@RequestBody Map<String, Object> param ) throws Exception {
+		String redirectUri= (String) param.get("redirectUri");
 		System.out.println("환경변수확인 : " + redirectUri);
 		System.out.println("확인!! :" + Constants.kakaoAuthUrl + "//" + Constants.kakaoApiKey + "//" + redirectUri);
-		String reqUrl = Constants.kakaoAuthUrl + "/oauth/authorize?client_id=" + Constants.kakaoApiKey + "&redirect_uri="+ redirectParam + "&response_type=code";
+		String reqUrl = Constants.kakaoAuthUrl + "/oauth/authorize?client_id=" + Constants.kakaoApiKey + "&redirect_uri="+ redirectUri + "&response_type=code";
 		System.out.println("완성 : "+ reqUrl);
 		return reqUrl;
 	}
 	
 	// 카카오 연동정보 조회
 	@PostMapping(value = "/login/oauth_kakao")
-	public Map<String, Object> oauthKakao(@RequestBody Map<String, Object> param) throws Exception {
+	public Map<String, Object> oauthKakao(@RequestBody Map<String, Object> param ) throws Exception {
 		String code= (String) param.get("code");
-		String redirectParam = (String) param.get("redirectUri");
+		String redirectUri= (String) param.get("redirectUri");
 		System.out.println("#########" + code);
-        String access_Token = authService.getAccessToken(code, redirectParam);
+        String access_Token = authService.getAccessToken(code, redirectUri);
         System.out.println("###access_Token#### : " + access_Token);
         
         
-        
-        HashMap<String, Object> userInfo = authService.getUserInfo(access_Token, redirectParam);
+        HashMap<String, Object> userInfo = authService.getUserInfo(access_Token, redirectUri);
         System.out.println("###access_Token#### : " + access_Token);
         System.out.println("###userInfo#### : " + userInfo.get("email"));
         System.out.println("###nickname#### : " + userInfo.get("nickname"));
