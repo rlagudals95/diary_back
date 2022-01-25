@@ -54,7 +54,7 @@ public class AuthService {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 			params.add("grant_type", "authorization_code");
 			params.add("client_id", "{client_id}");
-			params.add("redirect_uri", "http://memento.webview.s3-website.ap-northeast-2.amazonaws.com/");
+			params.add("redirect_uri", redirectUri);
 			params.add("code", "code");
 			params.add("client_secret", "{secret_code}");
 
@@ -157,7 +157,7 @@ public class AuthService {
               StringBuilder sb = new StringBuilder();
               sb.append("grant_type=authorization_code");
               sb.append("&client_id="+ Constants.kakaoApiKey);  //본인이 발급받은 key
-              sb.append("&redirect_uri=" + "http://memento.webview.s3-website.ap-northeast-2.amazonaws.com/");     // 본인이 설정해 놓은 경로
+              sb.append("&redirect_uri=" + redirectUri);     // 본인이 설정해 놓은 경로
               sb.append("&code=" + authorize_code);
               bw.write(sb.toString());
               bw.flush();
