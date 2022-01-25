@@ -73,11 +73,12 @@ public class UserController {
 	@PostMapping(value = "/login/oauth_kakao")
 	public Map<String, Object> oauthKakao(@RequestBody Map<String, Object> param) throws Exception {
 		String code= (String) param.get("code");
+		String redirectParam = (String) param.get("redirectUri");
 		System.out.println("#########" + code);
-        String access_Token = authService.getAccessToken(code);
+        String access_Token = authService.getAccessToken(code, redirectParam);
         System.out.println("###access_Token#### : " + access_Token);
         
-        String redirectParam = (String) param.get("redirectUri");
+        
         
         HashMap<String, Object> userInfo = authService.getUserInfo(access_Token, redirectParam);
         System.out.println("###access_Token#### : " + access_Token);

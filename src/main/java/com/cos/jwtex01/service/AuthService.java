@@ -142,7 +142,7 @@ public class AuthService {
           String access_Token = "";
           String refresh_Token = "";
           String reqURL = "https://kauth.kakao.com/oauth/token";
-
+          redirectParam = redirectParam.split("code")[0].substring(0, redirectParam.split("code")[0].length() - 1); ;
           try {
               URL url = new URL(reqURL);
 
