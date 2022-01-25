@@ -71,15 +71,15 @@ public class UserController {
 	
 	// 카카오 연동정보 조회
 	@PostMapping(value = "/login/oauth_kakao")
-	public Map<String, Object> oauthKakao(@RequestBody Map<String, Object> param ) throws Exception {
+	public Map<String, Object> oauthKakao(@RequestBody Map<String, Object> param) throws Exception {
 		String code= (String) param.get("code");
 		System.out.println("#########" + code);
         String access_Token = authService.getAccessToken(code);
         System.out.println("###access_Token#### : " + access_Token);
         
+        String redirectParam = (String) param.get("redirectUri");
         
-        
-        HashMap<String, Object> userInfo = authService.getUserInfo(access_Token);
+        HashMap<String, Object> userInfo = authService.getUserInfo(access_Token, redirectParam);
         System.out.println("###access_Token#### : " + access_Token);
         System.out.println("###userInfo#### : " + userInfo.get("email"));
         System.out.println("###nickname#### : " + userInfo.get("nickname"));

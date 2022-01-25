@@ -72,7 +72,7 @@ public class AuthService {
 	
 	
 	//유저정보조회
-    public HashMap<String, Object> getUserInfo (String access_Token) {
+    public HashMap<String, Object> getUserInfo (String access_Token , String redirectParam) {
 
         //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
         HashMap<String, Object> userInfo = new HashMap<String, Object>();
@@ -138,7 +138,7 @@ public class AuthService {
     }
     
     //토큰발급
-  	public String getAccessToken (String authorize_code) {
+  	public String getAccessToken (String authorize_code, String redirectParam) {
           String access_Token = "";
           String refresh_Token = "";
           String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -157,7 +157,7 @@ public class AuthService {
               StringBuilder sb = new StringBuilder();
               sb.append("grant_type=authorization_code");
               sb.append("&client_id="+ Constants.kakaoApiKey);  //본인이 발급받은 key
-              sb.append("&redirect_uri=" + redirectUri);     // 본인이 설정해 놓은 경로
+              sb.append("&redirect_uri=" + redirectParam);     // 본인이 설정해 놓은 경로
               sb.append("&code=" + authorize_code);
               bw.write(sb.toString());
               bw.flush();
