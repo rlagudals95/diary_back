@@ -27,7 +27,7 @@ public class TestController {
 	public String main() {
 		//System.out.println("principal : "+principal.getUsername());
 			
-		return "<h1>Diary API</h1>";
+		return "<h1>Diary API0125</h1>";
 	}
 	
 }
