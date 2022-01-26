@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +29,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
-
 @Service
 public class AuthService {
 
@@ -39,7 +39,7 @@ public class AuthService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	/* 카카오로그인 */
+
 	
 	@SuppressWarnings("unused")
 	private void kakao () {
@@ -109,11 +109,16 @@ public class AuthService {
             String id = element.getAsJsonObject().get("id").getAsString();
             String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
             
+			/* jwt 토큰 */
+            
+            /* jwt 토큰 */
+            
             userInfo.put("accessToken", access_Token);
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
             userInfo.put("id", id);
             userInfo.put("birthday", birthday);    
+            userInfo.put("token", "");
             
             if ( userRepository.findByUsername(id) == null) {
             	JoinReqDto joinReqDto = new JoinReqDto();
