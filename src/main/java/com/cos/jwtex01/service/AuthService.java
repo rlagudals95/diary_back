@@ -202,10 +202,36 @@ public class AuthService {
       }
   	
   	
-  	  /* 네이버로그인 */
-  	
-  	
-  		
-  		
+//  로그인 처리 with token 	
+//	public Map<Stirng, Object> login(AdminLoginReqVo adminLoginReqVo) {
+//		
+//		AdminLoginResVo adminLoginResVo = new AdminLoginResVo();
+//		
+//		Map<String, Object> admin = commonDao.queryForObject("admin.selectAdminByLogin", Utils.objectToMap(adminLoginReqVo));
+//		
+//		if(isEmpty(admin)) { // 회원정보없음
+//			adminLoginResVo.setErrorCode(CommonCode.RETURN_FAIL_ADMIN_EMPTY.getCode(), CommonCode.RETURN_FAIL_ADMIN_EMPTY.getMessage());
+//		}else {
+//				
+//			if(!bcryptEncoder.matches(adminLoginReqVo.getPassword(), admin.get("password").toString())) { // 패스워드 불일치
+//				adminLoginResVo.setErrorCode(CommonCode.RETURN_FAIL_ADMIN_PW.getCode(), CommonCode.RETURN_FAIL_ADMIN_PW.getMessage());
+//				return adminLoginResVo;
+//			}
+//			
+//			String token = jwtTokenService.doGenerateTokenAdmin(getLongValue(admin, "admin_no"), admin.get("admin_id").toString());
+//			
+//			AdminLoginResDataVo adminLoginResDataVo = new AdminLoginResDataVo();
+//			adminLoginResDataVo.setActivity_new_cnt(commonDao.queryForInt("activity.selectActivityNewCntByAdmin", admin));
+//			adminLoginResDataVo.setAdmin_no(getLongValue(admin, "admin_no"));
+//			adminLoginResDataVo.setToken(token);
+//			
+//			adminLoginResVo.setErrorNone();
+//			adminLoginResVo.setResult_data(adminLoginResDataVo);
+//			
+//		}
+//		
+//		return adminLoginResVo;
+//		
+//	}
   		
 }

@@ -18,6 +18,11 @@ public class Constants {
 	//auth
 	//public static final String redirectUri = "http://localhost:3000/";
 	//public static final String redirectUriProd = "ec2-3-34-146-254.ap-northeast-2.compute.amazonaws.com:8000/";
-
+	
+	//jwt
+	public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 300*60*60;
+    public static final String SIGNING_KEY = "rlagudals95";
+    public static final String HEADER_STRING = "Authorization";
+    public static final String TOKEN_PREFIX = "Bearer ";
 }
 
